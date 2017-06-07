@@ -4,8 +4,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     def config = rootProject.extensions.getByName("ext")
-
-
+    
     compileSdkVersion rootProject.ext.compileSdkVersion
     //noinspection GroovyAssignabilityCheck
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -33,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.sola.github.kotlin.kotlin_test"
+        applicationId "com.sola.github.kotlin.tonight"
         minSdkVersion rootProject.ext.targetSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode config.getAt("androidVersionCode")
