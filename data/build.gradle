@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    //noinspection GroovyAssignabilityCheck
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//kapt {
+//    // 这个不写编译的时候会报错，
+//    generateStubs = true
+//}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+
+    compile project(':domain')
+
+    def dependencies = rootProject.ext.appDependencies
+    compile dependencies.dagger
+//    kapt dependencies.daggerCompiler
+
+    compile dependencies.kotlin
+
+//    compile dependencies.androidSupport
+    compile dependencies.rxKotlin
+
+    compile dependencies.gson
+
+    compile dependencies.retrofit
+    compile dependencies.retrofit_gson
+    compile dependencies.retrofit_adapter
+}

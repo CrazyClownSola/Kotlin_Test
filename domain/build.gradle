@@ -1,0 +1,21 @@
+//apply plugin: 'java'
+apply plugin: 'kotlin'
+
+configurations {
+    provided
+}
+
+dependencies {
+//    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    def domainDependencies = rootProject.ext.appDependencies
+
+//    provided domainDependencies.daggerCompiler
+
+    compile domainDependencies.kotlin
+
+    compile domainDependencies.dagger
+    compile domainDependencies.rxKotlin
+    compile domainDependencies.gson
+
+}

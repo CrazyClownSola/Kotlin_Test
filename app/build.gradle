@@ -1,0 +1,117 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def config = rootProject.extensions.getByName("ext")
+
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    //noinspection GroovyAssignabilityCheck
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    // 这一段配置是做versionCode 根据编译次数自动计数的功能
+    File versionPropsFile = file('../version.properties')
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+        config.set("androidVersionName", config.getAt("androidVersionName") + "${releaseVersion("" + code)}")
+        config.set("androidVersionCode", code)
+
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.sola.github.kotlin.kotlin_test"
+        minSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode config.getAt("androidVersionCode")
+        versionName config.getAt("androidVersionName")
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+
+    productFlavors {
+        // 对应不同cpu，不同cpu需要的Sdk最小版本也不同
+        // 准备接入ijkplayer
+        all32 { minSdkVersion rootProject.ext.targetSdkVersion }
+        all64 { minSdkVersion 21 }
+        // armv5 {}
+        // armv7a {}
+        // arm64 { minSdkVersion 21 }
+        // x86 {}
+    }
+}
+//
+kapt {
+    // 这个不写编译的时候会报错，
+    generateStubs = true
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+    compile project(':domain')
+    compile project(':tools')
+    compile project(':data')
+
+    def dependencies = rootProject.ext.appDependencies
+
+    compile dependencies.kotlin
+//
+    kapt dependencies.daggerCompiler
+    compile dependencies.dagger
+
+    compile dependencies.picasso
+    compile dependencies.rxKotlin
+    compile dependencies.rxAndroid2
+
+    compile dependencies.recyclerView
+    compile dependencies.appcompat
+    compile dependencies.cardview
+    compile dependencies.design
+    compile dependencies.palette
+    compile dependencies.contraint
+
+//    compile "org.jetbrains.anko:anko:0.10.1"
+}
+
+static def releaseVersion(String markTime) {
+    StringBuilder builder = new StringBuilder("" + markTime);
+    while (builder.length() < 5) {
+        builder.insert(0, "0");
+    }
+    println("Sola_Version " + builder.toString());
+    return builder.toString();
+}
+

@@ -1,0 +1,81 @@
+ext {
+    androidVersionCode = 0 // 备注一下，Code19以下的版本，需要注意进行环信帐号的自主申请功能的实现
+    androidVersionName = "1.0."// 基础版本
+
+    //Android
+//    buildToolsVersion = "25.0.2"
+//    minSdkVersion = 14
+//    targetSdkVersion = 23
+//    compileSdkVersion = 25
+//    compileSdkVersion = 'Google Inc.:Google APIs:24'
+
+    //libraries 惯用库包
+    daggerVersion = '2.8'
+    gsonVersion = '2.6.2'
+
+    supportV7Version = '25.3.1'
+    contraintVersion = '1.0.2'
+
+    retrofitVersion = '2.1.0'
+    annotationVersion = '4.0.0'
+
+    rxJavaVersion = '1.2.2'
+    rxAndroidVersion = '1.2.1'
+
+    autoValueVersion = '1.2'
+
+    javaxVersion = '1.2'
+    butterKnifeVersion = '8.4.0'
+
+    picassoVersion = '2.5.2'
+
+    kotlin_version = '1.1.2-3'
+
+    rxJava2Version = '2.1.0'
+    rxAndroid2Version = '2.0.1'
+    rxKotlinVersion = '2.0.3'
+
+    appDependencies = [
+            daggerCompiler  : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger          : "com.google.dagger:dagger:${daggerVersion}",
+            // rxJava
+            //            rxJava                : "io.reactivex:rxjava:${rxJavaVersion}",
+            //            rxAndroid             : "io.reactivex:rxandroid:${rxAndroidVersion}",
+
+            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}",
+
+            rxJava2         : "io.reactivex.rxjava2:rxjava:${rxJava2Version}",
+            rxAndroid2      : "io.reactivex.rxjava2:rxandroid:${rxAndroid2Version}",
+            rxKotlin        : "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
+
+            // supportV7系列
+            androidSupport  : "com.android.support:support-annotations:${supportV7Version}",
+            recyclerView    : "com.android.support:recyclerview-v7:${supportV7Version}",
+            appcompat       : "com.android.support:appcompat-v7:${supportV7Version}",
+            cardview        : "com.android.support:cardview-v7:${supportV7Version}",
+            design          : "com.android.support:design:${supportV7Version}",
+            palette         : "com.android.support:palette-v7:${supportV7Version}",
+            contraint       : "com.android.support.constraint:constraint-layout:${contraintVersion}",
+
+            // retrofit 网络请求框架
+            retrofit        : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofit_gson   : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofit_adapter: "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+
+            // 自定义注解的工具类
+            auto_value      : "com.google.auto.value:auto-value:${autoValueVersion}",
+            // 解决编译的build文件下会产生的java注解调用出错的问题
+            javax_annotation: "javax.annotation:javax.annotation-api:${javaxVersion}",
+
+            gson            : "com.google.code.gson:gson:${gsonVersion}",
+
+            picasso         : "com.squareup.picasso:picasso:${picassoVersion}",
+
+
+            roundedImageView: "com.makeramen:roundedimageview:2.2.1",
+
+            sola_container  : "com.github.crazyclownsola:recycler_container:1.0.7@aar",
+//            databinding_compiler  : "com.android.databinding:compiler:${buildToolsVersion}",
+    ]
+
+}
