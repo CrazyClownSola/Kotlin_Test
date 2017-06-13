@@ -1,3 +1,5 @@
+@file: Suppress("unused")
+
 package com.sola.github.kotlin.tonight.view.base
 
 import android.content.Context
@@ -6,53 +8,24 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import com.sola.github.kotlin.tonight.BR
+import com.sola.github.kotlin.tools.delegate.IRecyclerDelegate
 import java.util.*
 
 /**
  * Created by Sola
  * 2017/5/31.
+ * 界面呈现基类，基本所有界面呈现可以通用这个类
  */
-@Suppress("unused")
-interface IRecyclerDelegate {
-
-    /**
-     * 构建Holder，Holder和viewType唯一绑定关系
-     * 有多少个viewType，该方法被调用多少次
-     */
-    fun getHolder(context: Context, parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-
-    /**
-     * 布局刷新
-     */
-    fun refreshView(context: Context, holder: RecyclerView.ViewHolder, position: Int)
-
-    /**
-     * 获取viewType
-     */
-    fun getViewType(position: Int): Int
-
-    /**
-     * view被销毁的时候触发的
-     */
-    fun onViewRecycled()
-
-    /**
-     * 单项点击事件
-     */
-    fun itemClick(v: View, position: Int)
-}
-
-@Suppress("unused")
-abstract class BaseView<T>(item: T) : IRecyclerDelegate {
+abstract class BaseView<T : Any>(item: T) : IRecyclerDelegate {
 
     val viewType: Int = TypeBuilder.getInstance().generateId()
 
     var data: T = item
 
     override fun refreshView(context: Context, holder: RecyclerView.ViewHolder, position: Int) {
-
+        if (holder is BaseHolder)
+            holder.setData(data)
     }
 
     override fun getViewType(position: Int): Int = viewType
@@ -64,7 +37,10 @@ abstract class BaseView<T>(item: T) : IRecyclerDelegate {
     }
 }
 
-@Suppress("unused") class BaseHolder : RecyclerView.ViewHolder {
+/**
+ * 适配BaseView的所对应的Holder 类，内部采用DataBinding的方式进行代码构建
+ */
+class BaseHolder : RecyclerView.ViewHolder {
 
     var binding: ViewDataBinding = DataBindingUtil.bind(itemView)
 
@@ -83,7 +59,6 @@ abstract class BaseView<T>(item: T) : IRecyclerDelegate {
 
 }
 
-@Suppress("unused")
 class TypeBuilder private constructor() {
     val DEFAULT_INIT_TYPE = 0x01
 

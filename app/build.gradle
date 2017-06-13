@@ -4,9 +4,8 @@ apply plugin: 'kotlin-kapt'
 
 android {
     def config = rootProject.extensions.getByName("ext")
-    
+
     compileSdkVersion rootProject.ext.compileSdkVersion
-    //noinspection GroovyAssignabilityCheck
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     // 这一段配置是做versionCode 根据编译次数自动计数的功能
@@ -55,7 +54,6 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 
-
     productFlavors {
         // 对应不同cpu，不同cpu需要的Sdk最小版本也不同
         // 准备接入ijkplayer
@@ -74,7 +72,7 @@ kapt {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -102,7 +100,21 @@ dependencies {
     compile dependencies.palette
     compile dependencies.contraint
 
-//    compile "org.jetbrains.anko:anko:0.10.1"
+    // ijk引用，这里采用的是linux编译工程之后产生对应的module引入的方式
+    compile project(':ijkplayer-java')
+    compile project(':ijkplayer-exo')
+
+    all32Compile project(':ijkplayer-armv5')
+    all32Compile project(':ijkplayer-armv7a')
+    all32Compile project(':ijkplayer-x86')
+
+    all64Compile project(':ijkplayer-armv5')
+    all64Compile project(':ijkplayer-armv7a')
+    all64Compile project(':ijkplayer-arm64')
+    all64Compile project(':ijkplayer-x86')
+    all64Compile project(':ijkplayer-x86_64')
+
+    compile "org.jetbrains.anko:anko:0.10.1"
 }
 
 static def releaseVersion(String markTime) {

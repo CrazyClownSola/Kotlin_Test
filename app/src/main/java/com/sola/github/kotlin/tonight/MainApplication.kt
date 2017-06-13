@@ -1,9 +1,8 @@
 package com.sola.github.kotlin.tonight
 
 import android.app.Application
-import com.sola.github.kotlin.tonight.di.AppComponent
-import com.sola.github.kotlin.tonight.di.AppModule
-import com.sola.github.kotlin.tonight.di.DaggerAppComponent
+import android.databinding.DataBindingUtil
+import com.sola.github.kotlin.tonight.di.*
 
 /**
  * Created by Sola
@@ -23,6 +22,7 @@ class MainApplication : Application() {
 
     fun initComponent() {
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        DataBindingUtil.setDefaultComponent(DaggerDefaultUIComponent.create())
     }
 
 }

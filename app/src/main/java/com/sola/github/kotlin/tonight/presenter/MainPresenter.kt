@@ -2,6 +2,8 @@ package com.sola.github.kotlin.tonight.presenter
 
 import com.google.gson.Gson
 import com.sola.github.kotlin.domain.cases.UserCenterCase
+import com.sola.github.kotlin.domain.exception.ErrorDTO
+import com.sola.github.kotlin.tools.delegate.IRecyclerDelegate
 import javax.inject.Inject
 
 /**
@@ -21,5 +23,13 @@ class MainPresenter @Inject constructor(
 
         })
     }
+
+    fun requestClubList(
+            onNext: (Collection<IRecyclerDelegate>) -> Unit,
+            onError: (ErrorDTO) -> Unit
+    ) {
+
+    }
+
 
 }

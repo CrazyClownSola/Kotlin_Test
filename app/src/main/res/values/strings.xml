@@ -3,4 +3,16 @@
     <string name="string_label_main_recommend">推荐</string>
     <string name="string_label_main_circle">圈子</string>
     <string name="string_label_main_my">我的</string>
+    <string name="string_label_default_area">全国</string>
+
+    <string name="string_hint_search_text">请输入酒吧名、风格或活动</string>
+    <string name="string_label_near_by">附近</string>
+    <string name="string_label_popularity">人气</string>
+    <string name="string_label_environment">环境</string>
+    <string name="string_label_filter">筛选</string>
+
+    <string name="string_recycler_linear_layout_manage">android.support.v7.widget.LinearLayoutManager</string>
+    <string name="string_recycler_grid_layout_manage">android.support.v7.widget.GridLayoutManager</string>
+    <string name="string_app_bar_layout_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
 </resources>

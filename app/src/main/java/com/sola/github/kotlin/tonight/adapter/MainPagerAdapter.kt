@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.sola.github.kotlin.tonight.enums.EMain
+import com.sola.github.kotlin.tonight.ui.MainFragment
 import com.sola.github.kotlin.tools.adapter.AFragmentStateViewAdapter
 
 /**
@@ -21,7 +22,7 @@ class MainPagerAdapter(fm: FragmentManager, tab: Array<EMain>)
     }
 
     override fun initFragment(tab: EMain): Fragment {
-        return Fragment()
+        return MainFragment()
     }
 
     override fun getPageTitle(position: Int): CharSequence {

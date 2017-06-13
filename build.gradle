@@ -11,7 +11,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        // 当这里版本调整成2.3.+的时候 databinding + kotlin 结合的时候会编译报错Using kotlin incremental compilation
+        // 暂且没有找到合适的解决方法
+        classpath 'com.android.tools.build:gradle:2.2.3'
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong

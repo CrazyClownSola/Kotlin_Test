@@ -32,6 +32,8 @@ dependencies {
     def dependencies = rootProject.ext.appDependencies
 
     compile dependencies.kotlin
+    // supportV7的包中的特有的一些控件
+    compile dependencies.recyclerView
     compile dependencies.appcompat
 
 }

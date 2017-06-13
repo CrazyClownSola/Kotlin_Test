@@ -1,4 +1,5 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
+@file:JvmName("Logging")
 
 package com.sola.github.kotlin.tools.utils
 
@@ -11,12 +12,16 @@ import android.util.Log
  * 通过继承该类
  */
 interface SolaLogger {
-    val tag: String
+
+    val DEBUG: Boolean
+        get() = true
+
+    val loggerTag: String
         get() = getTag(javaClass)
 }
 
 fun SolaLogger(clazz: Class<*>): SolaLogger = object : SolaLogger {
-    override val tag = getTag(clazz)
+    override val loggerTag = getTag(clazz)
 }
 
 fun SolaLogger(tag: String): SolaLogger = object : SolaLogger {
@@ -24,7 +29,7 @@ fun SolaLogger(tag: String): SolaLogger = object : SolaLogger {
         assert(tag.length <= 23)
     }
 
-    override val tag = tag
+    override val loggerTag = tag
 }
 
 // 这里reified修饰符表示该方法可以透过<>调用，同时由于inline的存在，定义的T类型可以在方法中使用
@@ -62,34 +67,36 @@ fun SolaLogger.error(message: Any?, thr: Throwable? = null) {
 }
 
 inline fun SolaLogger.verbose(message: () -> Any?) {
-    val tag = tag
+    val tag = loggerTag
     if (Log.isLoggable(tag, Log.VERBOSE))
         Log.v(tag, message()?.toString() ?: "null")
 }
 
 inline fun SolaLogger.debug(message: () -> Any?) {
-    val tag = tag
+    val tag = loggerTag
     if (Log.isLoggable(tag, Log.DEBUG))
         Log.d(tag, message()?.toString() ?: "null")
 }
 
 inline fun SolaLogger.info(message: () -> Any?) {
-    val tag = tag
+    val tag = loggerTag
     if (Log.isLoggable(tag, Log.INFO))
         Log.i(tag, message()?.toString() ?: "null")
 }
 
 inline fun SolaLogger.warn(message: () -> Any?) {
-    val tag = tag
+    val tag = loggerTag
     if (Log.isLoggable(tag, Log.WARN))
         Log.w(tag, message()?.toString() ?: "null")
 }
 
 inline fun SolaLogger.error(message: () -> Any?) {
-    val tag = tag
+    val tag = loggerTag
     if (Log.isLoggable(tag, Log.ERROR))
         Log.e(tag, message()?.toString() ?: "null")
 }
+
+inline fun Throwable.getStackTraceString(): String = Log.getStackTraceString(this)
 
 private inline fun log(
         logger: SolaLogger,
@@ -99,8 +106,8 @@ private inline fun log(
         f: (String, String) -> Unit,
         fThrowable: (String, String, Throwable) -> Unit
 ) {
-    val tag = logger.tag
-    if (Log.isLoggable(tag, level))
+    val tag = logger.loggerTag
+    if (logger.DEBUG && Log.isLoggable(tag, level))
         if (thr != null)
             fThrowable(tag, message?.toString() ?: "null", thr)
         else f(tag, message?.toString() ?: "null")

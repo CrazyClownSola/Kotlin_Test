@@ -2,7 +2,8 @@ package com.sola.github.kotlin.tonight.di
 
 import com.sola.github.kotlin.domain.cases.UserCenterCase
 import com.sola.github.kotlin.domain.cases.UserCenterCaseImpl
-import com.sola.github.kotlin.tonight.MainActivity
+import com.sola.github.kotlin.tonight.ui.MainActivity
+import com.sola.github.kotlin.tonight.ui.MainFragment
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -17,6 +18,8 @@ interface MainCenterComponent {
 
 
     fun inject(activity: MainActivity)
+
+    fun inject(fragment: MainFragment)
 }
 
 @Module
