@@ -58,7 +58,7 @@ android {
         // 对应不同cpu，不同cpu需要的Sdk最小版本也不同
         // 准备接入ijkplayer
         all32 { minSdkVersion rootProject.ext.targetSdkVersion }
-        all64 { minSdkVersion 21 }
+        all64 { minSdkVersion 24 }
         // armv5 {}
         // armv7a {}
         // arm64 { minSdkVersion 21 }
@@ -81,6 +81,7 @@ dependencies {
     compile project(':domain')
     compile project(':tools')
     compile project(':data')
+    compile project(':java-library')
 
     def dependencies = rootProject.ext.appDependencies
 

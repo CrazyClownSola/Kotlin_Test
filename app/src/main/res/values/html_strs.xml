@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="str_text_only_number">%1$d</string>
+
+    <string name="str_label_per_capita">人均：%1$d</string>
+
+</resources>

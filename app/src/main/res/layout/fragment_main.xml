@@ -141,6 +141,7 @@
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="0dp"
                 app:adapter="@{adapter}"
+                app:layoutManager="@string/string_recycler_linear_layout_manage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -148,24 +149,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <!--</android.support.design.widget.CoordinatorLayout>-->
-        <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--android:minHeight="?attr/actionBarSize"-->
-        <!--android:theme="?attr/actionBarTheme"-->
-        <!--app:contentInsetStart="0dp"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--<include-->
-        <!--layout="@layout/layout_header_feature_area"-->
-        <!--app:listener="@{listener}"-->
-        <!--/>-->
-        <!--</android.support.v7.widget.Toolbar>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

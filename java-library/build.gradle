@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    def config = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion config.getAt("compileSdkVersion")
+    buildToolsVersion config.getAt("buildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion config.getAt("minSdkVersion")
+        targetSdkVersion config.getAt("targetSdkVersion")
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+    def dependencies = rootProject.ext.appDependencies
+
+    compile dependencies.kotlin
+    // supportV7的包中的特有的一些控件
+    compile dependencies.recyclerView
+    compile dependencies.appcompat
+    compile dependencies.picasso
+
+
+}

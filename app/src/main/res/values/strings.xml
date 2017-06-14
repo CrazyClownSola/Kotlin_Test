@@ -14,5 +14,9 @@
     <string name="string_recycler_linear_layout_manage">android.support.v7.widget.LinearLayoutManager</string>
     <string name="string_recycler_grid_layout_manage">android.support.v7.widget.GridLayoutManager</string>
     <string name="string_app_bar_layout_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="string_label_club_booked">前往预定</string>
+    <string name="string_label_club_detail">酒吧详情</string>
+    <string name="string_label_offer">套餐优惠</string>
+    <string name="string_label_amazing_events">精彩活动</string>
 
 </resources>

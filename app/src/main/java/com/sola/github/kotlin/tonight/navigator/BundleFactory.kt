@@ -22,44 +22,44 @@ class BundleFactory @Inject constructor() {
         return bundle
     }
 
-    fun putString(key: String, value: String): Bundle {
+    fun putString(key: String, value: String): BundleFactory {
         bundle.putString(key, value)
-        return bundle
+        return this
     }
 
-    fun putBundle(key: String?, value: Bundle): Bundle {
+    fun putBundle(key: String?, value: Bundle): BundleFactory {
         bundle.putBundle(key, value)
-        return bundle
+        return this
     }
 
-    fun putBoolean(key: String, value: Boolean): Bundle {
+    fun putBoolean(key: String, value: Boolean): BundleFactory {
         bundle.putBoolean(key, value)
-        return bundle
+        return this
     }
 
-    fun putByte(key: String, vararg value: Byte): Bundle {
+    fun putByte(key: String, vararg value: Byte): BundleFactory {
         bundle.putByteArray(key, value)
-        return bundle
+        return this
     }
 
-    fun putFloat(key: String, vararg value: Float): Bundle {
+    fun putFloat(key: String, vararg value: Float): BundleFactory {
         bundle.putFloatArray(key, value)
-        return bundle
+        return this
     }
 
-    fun putInt(key: String, vararg value: Int): Bundle {
+    fun putInt(key: String, vararg value: Int): BundleFactory {
         bundle.putIntArray(key, value)
-        return bundle
+        return this
     }
 
-    fun putChar(key: String, vararg value: Char): Bundle {
+    fun putChar(key: String, vararg value: Char): BundleFactory {
         bundle.putCharArray(key, value)
-        return bundle
+        return this
     }
 
-    fun putSerializable(key: String, value: Serializable): Bundle {
+    fun putSerializable(key: String, value: Serializable): BundleFactory {
         bundle.putSerializable(key, value)
-        return bundle
+        return this
     }
 
 //    companion object Factory { // 这个是静态实现,不推荐这么做

@@ -12,7 +12,6 @@ import com.sola.github.kotlin.tonight.enums.EMain
 import com.sola.github.kotlin.tonight.enums.EnumList
 import com.sola.github.kotlin.tonight.navigator.Navigator
 import com.sola.github.kotlin.tonight.presenter.MainPresenter
-import com.sola.github.kotlin.tonight.ui.RxBindingBaseActivity
 import com.sola.github.kotlin.tools.utils.SolaLogger
 import javax.inject.Inject
 
@@ -50,9 +49,9 @@ class MainActivity : RxBindingBaseActivity(), SolaLogger, HasComponent<MainCente
     override fun doAfterView() {
         val mains: Array<EMain> =
                 arrayOf(
-                        EMain(EnumList.TAB_RECOMMEND, -1, getString(R.string.string_label_main_recommend)),
-                        EMain(EnumList.TAB_CIRCLE, -1, getString(R.string.string_label_main_circle)),
-                        EMain(EnumList.TAB_MANAGE, -1, getString(R.string.string_label_main_my))
+                        EMain(EnumList.TAB_RECOMMEND, -1, getString(R.string.string_label_main_recommend))
+//                        EMain(EnumList.TAB_CIRCLE, -1, getString(R.string.string_label_main_circle)),
+//                        EMain(EnumList.TAB_MANAGE, -1, getString(R.string.string_label_main_my))
                 )
         adapter = MainPagerAdapter(supportFragmentManager, mains)
         binding.adapter = adapter

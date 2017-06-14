@@ -2,12 +2,14 @@ package com.sola.github.kotlin.tonight.di
 
 import android.app.Application
 import android.content.Context
+import com.sola.github.kotlin.data.repository.ClubCenterDataRepository
 import com.sola.github.kotlin.data.repository.UserCenterDataRepository
 import com.sola.github.kotlin.data.repository.exception.ErrorDelegateImpl
 import com.sola.github.kotlin.domain.exception.ErrorDelegate
 import com.sola.github.kotlin.domain.executor.DBExecutorThread
 import com.sola.github.kotlin.domain.executor.NetExecutorThread
 import com.sola.github.kotlin.domain.executor.UIExecutorThread
+import com.sola.github.kotlin.domain.repository.ClubCenterRepository
 import com.sola.github.kotlin.domain.repository.UserCenterRepository
 import com.sola.github.kotlin.tonight.executor.DBExecutor
 import com.sola.github.kotlin.tonight.executor.NetExecutor
@@ -36,6 +38,8 @@ interface AppComponent {
 
     // SubComponent的调用方式调整成这种模式
     fun plus(module: MainCenterModule): MainCenterComponent
+
+    fun plus(module: ClubCenterModule): ClubCenterComponent
 
 }
 
@@ -75,15 +79,17 @@ class RepositoryModule {
     fun provideUserCenterRepository(impl: UserCenterDataRepository)
             : UserCenterRepository = impl
 
+    @Provides
+    @Singleton
+    fun provideClubCenterRepository(impl: ClubCenterDataRepository): ClubCenterRepository = impl
+
 }
 
 @Module
 class DataModule
 
 @Module
-class DomainModule {
-
-}
+class DomainModule
 
 /**
  * 在Kotlin当中想要使用SubComponent的时候需要注意

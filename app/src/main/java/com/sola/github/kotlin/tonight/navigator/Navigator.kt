@@ -20,14 +20,14 @@ class Navigator @Inject constructor() {
 
     fun switchActivity(
             context: Context,
-            clazz: Class<Any>,
+            clazz: Class<*>,
             bundle: Bundle?) {
         switchActivity(context, clazz, bundle, -1, R.anim.fade_in_left, R.anim.activity_back)
     }
 
     fun switchActivityForResult(
             context: Context,
-            clazz: Class<Any>,
+            clazz: Class<*>,
             bundle: Bundle?,
             requestCode: Int) {
         switchActivity(context, clazz, bundle, requestCode, R.anim.fade_in_left, R.anim.activity_back)
@@ -35,7 +35,7 @@ class Navigator @Inject constructor() {
 
     fun switchActivityForResult(
             context: Context,
-            clazz: Class<Any>,
+            clazz: Class<*>,
             bundle: Bundle?,
             requestCode: Int,
             targetInAnim: Int,
@@ -45,7 +45,7 @@ class Navigator @Inject constructor() {
 
     private fun switchActivity(
             context: Context,
-            clazz: Class<Any>,
+            clazz: Class<*>,
             bundle: Bundle?,
             requestCode: Int,
             targetInAnim: Int,
@@ -53,15 +53,26 @@ class Navigator @Inject constructor() {
             vararg pairs: Pair<View, String>) {
         val intent: Intent = Intent(context, clazz)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && context is Activity) {
+//            if (pairs.isEmpty()) {
+//                intent.putExtras(bundle)
+//                when (requestCode) {
+//                    -1 ->
+//                        context.startActivity(intent)
+//                    else ->
+//                        (context).startActivityForResult(intent, requestCode)
+//                }
+//            } else {
+            intent.putExtras(bundle)
             val options: ActivityOptions =
                     ActivityOptions.makeSceneTransitionAnimation(context, *pairs)
-            options.toBundle().putAll(bundle)
+//                options.toBundle().putAll(bundle)
             when (requestCode) {
                 -1 ->
                     context.startActivity(intent, options.toBundle())
                 else ->
                     (context).startActivityForResult(intent, requestCode, options.toBundle())
             }
+//            }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             context.startActivity(intent, bundle)
         } else

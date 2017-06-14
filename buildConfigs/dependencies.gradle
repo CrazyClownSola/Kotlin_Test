@@ -10,7 +10,7 @@ ext {
 //    compileSdkVersion = 'Google Inc.:Google APIs:24'
 
     //libraries 惯用库包
-    daggerVersion = '2.8'
+    daggerVersion = '2.11'
     gsonVersion = '2.6.2'
 
     supportV7Version = '25.3.1'

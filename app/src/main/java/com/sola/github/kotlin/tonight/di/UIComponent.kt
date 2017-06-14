@@ -2,9 +2,14 @@ package com.sola.github.kotlin.tonight.di
 
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingComponent
+import android.graphics.drawable.Drawable
+import android.support.annotation.DrawableRes
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.RequestCreator
 import dagger.Component
 import dagger.Module
 import dagger.Provides
@@ -42,9 +47,27 @@ interface IBindAdapter {
     @BindingAdapter(value = *arrayOf("adapter"), requireAll = false)
     fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>)
 
+    @BindingAdapter(value = *arrayOf("pic", "resId", "empty", "error"), requireAll = false)
+    fun setImageUrl(view: ImageView, url: String?, @DrawableRes resId: Int, empty: Drawable?, error: Drawable?)
+
 }
 
 class DefaultBindingAdapter @Inject constructor() : IBindAdapter {
+    override fun setImageUrl(view: ImageView, url: String?, resId: Int, empty: Drawable?, error: Drawable?) {
+        if (!url.isNullOrEmpty()) {
+            val creator: RequestCreator = Picasso.with(view.context).load(url)
+            if (error != null)
+                creator.error(error)
+            creator.into(view)
+        } else if (resId > 0) {
+            val creator: RequestCreator = Picasso.with(view.context).load(resId)
+            if (error != null)
+                creator.error(error)
+            creator.into(view)
+        } else if (empty != null)
+            view.setImageDrawable(empty)
+
+    }
 
     override fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
         view.adapter = adapter

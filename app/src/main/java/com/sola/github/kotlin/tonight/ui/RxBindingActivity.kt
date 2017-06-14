@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import com.sola.github.kotlin.tonight.R
+import com.sola.github.kotlin.tonight.utils.Key_Constant
 import java.lang.ref.WeakReference
 
 /**
@@ -24,10 +25,10 @@ import java.lang.ref.WeakReference
 abstract class RxBindingBaseActivity : AppCompatActivity() {
 
     // 内部类，通常定义常量，一些供外部调用类，类似static
-    companion object {
-        const val TITLE_EXTRA: String = "title"
-        const val MENU_EXTRA: String = "menu_id"
-    }
+//    companion object {
+//        const val TITLE_EXTRA: String = "title"
+//        const val MENU_EXTRA: String = "menu_id"
+//    }
 
     protected var menu_id: Int = -1
     protected lateinit var title: String
@@ -74,7 +75,7 @@ abstract class RxBindingBaseActivity : AppCompatActivity() {
         view?.let {
             val id_tool_bar = it as Toolbar
             if (TextUtils.isEmpty(title))
-                id_tool_bar.title = TITLE_EXTRA
+                id_tool_bar.title = Key_Constant.KEY_TITLE
             else
                 id_tool_bar.title = title
             setSupportActionBar(id_tool_bar)
@@ -101,12 +102,14 @@ abstract class RxBindingBaseActivity : AppCompatActivity() {
     private fun inject_extras() {
         val extras_: Bundle? = intent.extras
         if (extras_ == null)
-            title = ""
+            title = String()
         extras_?.let {
-            if (it.containsKey(TITLE_EXTRA))
-                title = it.getString(TITLE_EXTRA)
-            if (it.containsKey(MENU_EXTRA))
-                menu_id = it.getInt(MENU_EXTRA)
+            if (it.containsKey(Key_Constant.KEY_TITLE))
+                title = it.getString(Key_Constant.KEY_TITLE)
+            else
+                title = String()
+            if (it.containsKey(Key_Constant.KEY_MENU_ID))
+                menu_id = it.getInt(Key_Constant.KEY_MENU_ID)
             initExtras(it)
         }
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.sola.github.kotlin.domain.dtos.ClubDetailInfoDTO"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/id_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@drawable/background_toolbar_base_line"
+            app:titleTextColor="?colorControlNormal"/>
+
+        <!-- 分页ViewGroup -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sola.github.java_library.widget.SlideDetailsLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:percent="0.2"
+                >
+
+                <include
+                    layout="@layout/layout_club_detail_first_page"
+                    app:data="@{data}"/>
+
+                <include layout="@layout/layout_club_detail_second_page"/>
+
+            </com.sola.github.java_library.widget.SlideDetailsLayout>
+        </FrameLayout>
+    </LinearLayout>
+</layout>

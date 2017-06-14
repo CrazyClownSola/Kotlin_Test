@@ -19,7 +19,7 @@ import java.util.*
  */
 open class RecyclerBaseAdapter<Param : IRecyclerDelegate>
 // MutableCollection，Kotlin将集合分为可变集合和不可变集合，Mutable是可变的，考虑到Adapter当中的数据存在多变性
-(context: Context, val data: Collection<Param>) :
+(context: Context, data: Collection<Param>) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), SolaLogger {
 
     val mContext: WeakReference<Context> = WeakReference(context)
@@ -56,7 +56,7 @@ open class RecyclerBaseAdapter<Param : IRecyclerDelegate>
         if (position < 0 || position >= list.size)
             return
         val item = list.elementAt(position)
-        holder!!.let {
+        holder?.let {
             item.refreshView(mContext.get()!!, it, position)
             it.itemView.setOnClickListener {
                 if (listener == null)
@@ -100,18 +100,18 @@ open class RecyclerBaseAdapter<Param : IRecyclerDelegate>
 
     fun refreshList(param: Collection<Param>) {
         destroyAll()
-        list.plus(param)
+        list.addAll(param)
         notifyDataSetChanged()
     }
 
     fun refreshList(param: Param) {
         destroyAll()
-        list.plus(param)
+        list.add(param)
         notifyDataSetChanged()
     }
 
     fun addItem(item: Param) {
-        list.plus(item)
+        list.add(item)
         notifyItemInserted(list.indexOf(item))
     }
 
@@ -126,7 +126,7 @@ open class RecyclerBaseAdapter<Param : IRecyclerDelegate>
             start = list.size - 1
         else
             start = 0
-        list.plus(item)
+        list.addAll(item)
         notifyItemRangeChanged(start, item.size)
     }
 
@@ -219,7 +219,7 @@ class RecyclerComplexBaseAdapter<
 
     fun addHeaderView(position: Int, header: Header) {
         if (headers.size > position) {
-            val oldItem = headers.get(position)
+            val oldItem = headers[position]
             headers.add(position, header)
             headers.add(position + 1, oldItem)
         } else
