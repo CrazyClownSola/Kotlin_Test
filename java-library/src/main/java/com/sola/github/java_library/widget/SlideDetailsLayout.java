@@ -9,7 +9,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -66,10 +68,9 @@ public class SlideDetailsLayout extends ViewGroup {
 
     private float mTouchSlop;
     private float mInitMotionY;
-    private float mInitMotionX;
 
     private View mTarget;
-    private float mSlideOffset;
+    private float mSlideOffset, maxRange;
     private Status mStatus = Status.CLOSE;
     private boolean isFirstShowBehindView = true;
     private float mPercent = DEFAULT_PERCENT;
@@ -167,6 +168,11 @@ public class SlideDetailsLayout extends ViewGroup {
         }
 
         mFrontView = getChildAt(0);
+
+        int scrollRange =
+                computeVerticalScrollRange((NestedScrollView) ((ViewGroup) mFrontView).getChildAt(1));
+        int barOffset = 400;
+        maxRange = scrollRange - mFrontView.getHeight() + barOffset;
         mBehindView = getChildAt(1);
 
         // set behindview's visibility to GONE before show.
@@ -207,11 +213,12 @@ public class SlideDetailsLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.i("Sola_Silde", "onLayout() called with: off[" + mSlideOffset + "] = [" + changed + "], l = [" + l + "], t = [" + t + "], r = [" + r + "], b = [" + b + "]");
         int top;
         int bottom;
-
+//        if (mSlideOffset == 0 && mStatus == Status.CLOSE)
+//            return;
         final int offset = (int) mSlideOffset;
-
         View child;
         for (int i = 0; i < getChildCount(); i++) {
             child = getChildAt(i);
@@ -235,59 +242,71 @@ public class SlideDetailsLayout extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        ensureTarget();
-        if (null == mTarget) {
-            return false;
-        }
-
-        if (!isEnabled()) {
-            return false;
-        }
-
-        final int aciton = MotionEventCompat.getActionMasked(ev);
-
-        boolean shouldIntercept = false;
-        switch (aciton) {
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                mInitMotionX = ev.getX();
+                float mInitMotionX = ev.getX();
                 mInitMotionY = ev.getY();
-                shouldIntercept = false;
-                break;
             }
             case MotionEvent.ACTION_MOVE: {
-                final float x = ev.getX();
-                final float y = ev.getY();
-
-                final float xDiff = x - mInitMotionX;
-                final float yDiff = y - mInitMotionY;
-
-                if (canChildScrollVertically((int) yDiff)) {
-                    shouldIntercept = false;
-                } else {
-                    final float xDiffabs = Math.abs(xDiff);
-                    final float yDiffabs = Math.abs(yDiff);
-
-                    // intercept rules：
-                    // 1. The vertical displacement is larger than the horizontal displacement;
-                    // 2. Panel stauts is CLOSE：slide up
-                    // 3. Panel status is OPEN：slide down
-                    if (yDiffabs > mTouchSlop && yDiffabs >= xDiffabs
-                            && !(mStatus == Status.CLOSE && yDiff > 0
-                            || mStatus == Status.OPEN && yDiff < 0)) {
-                        shouldIntercept = true;
-                    }
-                }
-                break;
-            }
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL: {
-                shouldIntercept = false;
-                break;
+                int yDiff = (int) (ev.getY() - mInitMotionY);
+                return mStatus == Status.CLOSE && ((yDiff < 0 && Math.abs(yDiff) >= maxRange) || (yDiff < 0 && cacheY < 0 && Math.abs(cacheY) >= maxRange));
+//                int xDiff = (int) (ev.getX() - mInitMotionX);
+//                return Math.abs(yDiff) > mTouchSlop && Math.abs(yDiff) >= Math.abs(xDiff) && !(mStatus == Status.CLOSE && yDiff > 0 || mStatus == Status.OPEN && yDiff < 0);
             }
 
         }
 
-        return shouldIntercept;
+        return super.onInterceptTouchEvent(ev);
+//        ensureTarget();
+//        if (null == mTarget) {
+//            return false;
+//        }
+//
+//        if (!isEnabled()) {
+//            return false;
+//        }
+//
+//        final int aciton = MotionEventCompat.getActionMasked(ev);
+//
+//        boolean shouldIntercept = false;
+//        switch (aciton) {
+//            case MotionEvent.ACTION_DOWN: {
+//                mInitMotionX = ev.getX();
+//                mInitMotionY = ev.getY();
+//                return super.onInterceptTouchEvent(ev);
+//            }
+//            case MotionEvent.ACTION_MOVE: {
+//                final float x = ev.getX();
+//                final float y = ev.getY();
+//
+//                final float xDiff = x - mInitMotionX;
+//                final float yDiff = y - mInitMotionY;
+//
+//                if (canChildScrollVertically((int) yDiff)) {
+//                    return super.onInterceptTouchEvent(ev);
+//                } else {
+//                    final float xDiffabs = Math.abs(xDiff);
+//                    final float yDiffabs = Math.abs(yDiff);
+//
+//                    // intercept rules：
+//                    // 1. The vertical displacement is larger than the horizontal displacement;
+//                    // 2. Panel stauts is CLOSE：slide up
+//                    // 3. Panel status is OPEN：slide down
+//                    if (yDiffabs > mTouchSlop && yDiffabs >= xDiffabs
+//                            && !(mStatus == Status.CLOSE && yDiff > 0
+//                            || mStatus == Status.OPEN && yDiff < 0)) {
+//                        return true;
+//                    }
+//                }
+//                return super.onInterceptTouchEvent(ev);
+//            }
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL: {
+//                return super.onInterceptTouchEvent(ev);
+//            }
+//
+//        }
+//        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
@@ -314,8 +333,10 @@ public class SlideDetailsLayout extends ViewGroup {
             }
 
             case MotionEvent.ACTION_MOVE: {
+
                 final float y = ev.getY();
                 final float yDiff = y - mInitMotionY;
+
                 if (canChildScrollVertically(((int) yDiff))) {
                     wantTouch = false;
                 } else {
@@ -327,12 +348,39 @@ public class SlideDetailsLayout extends ViewGroup {
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
+                if (mStatus == Status.CLOSE) {
+                    final float y = ev.getY();
+                    final float yDiff = y - mInitMotionY;
+                    cacheY += yDiff;
+                } else cacheY = 0;
+                // 当第一个页面呈现的时候，并且第一个页面可以滑动
                 finishTouchEvent();
                 wantTouch = false;
                 break;
             }
         }
         return wantTouch;
+    }
+
+    private int cacheY;
+
+    public int computeVerticalScrollRange(NestedScrollView scrollview) {
+        final int count = scrollview.getChildCount();
+        final int contentHeight = scrollview.getHeight() - scrollview.getPaddingBottom() - scrollview.getPaddingTop();
+        if (count == 0) {
+            return contentHeight;
+        }
+
+        int scrollRange = scrollview.getChildAt(0).getBottom();
+        final int scrollY = scrollview.getScrollY();
+        final int overscrollBottom = Math.max(0, scrollRange - contentHeight);
+        if (scrollY < 0) {
+            scrollRange -= scrollY;
+        } else if (scrollY > overscrollBottom) {
+            scrollRange += scrollY - overscrollBottom;
+        }
+
+        return scrollRange;
     }
 
     /**
@@ -350,8 +398,15 @@ public class SlideDetailsLayout extends ViewGroup {
             if (offset >= 0) {
                 mSlideOffset = 0;
             } else {
-                mSlideOffset = offset;
+// 两种情况下，第一次 单次滑动的距离大于Range极限的时候
+                if (cacheY < 0 && Math.abs(cacheY) >= maxRange) {
+                    mSlideOffset = offset;
+                } else {
+//                    cacheY -= offset;
+                    mSlideOffset = 0;
+                }
             }
+            Log.d("Sola_Slide", "cacheY[" + cacheY + "]offset[" + offset + "]");
 
             if (mSlideOffset == oldOffset) {
                 return;
@@ -359,6 +414,7 @@ public class SlideDetailsLayout extends ViewGroup {
 
             // pull down to close
         } else if (mStatus == Status.OPEN) {
+            cacheY = 0;
             final float pHeight = -getMeasuredHeight();
             // reset if pull up
             if (offset <= 0) {
@@ -494,6 +550,7 @@ public class SlideDetailsLayout extends ViewGroup {
                 }
             }
         }
+//        return ViewCompat.dispatchNestedScroll(mTarget, -direction, 0, 0, 0, new int[]{0, 628});
         return ViewCompat.canScrollVertically(mTarget, -direction);
     }
 

@@ -1,6 +1,7 @@
 package com.sola.github.kotlin.tonight.ui
 
 import android.content.Context
+import android.support.design.widget.AppBarLayout
 import android.view.View
 import com.google.gson.Gson
 import com.sola.github.kotlin.domain.dtos.ClubInfoDTO
@@ -44,6 +45,14 @@ class MainFragment : RxBindingFragment() {
 
     override fun inject_binding(view: View?) {
         binding = buildBinding(view!!)
+        binding.setListener {
+            when (it.id) {
+                R.id.id_btn_location -> {
+                    navigator.switchActivity(context, EmptyActivity::class.java, null)
+                }
+//                        navigator.switchActivity()
+            }
+        }
     }
 
     override fun doAfterView() {

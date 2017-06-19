@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="EdgeLoadingView">
+        <attr name="edge_cycle_duration" format="integer"/>
+        <attr name="edge_cycle_radius" format="dimension"/>
+    </declare-styleable>
+
     <declare-styleable name="RoundedImageView">
         <attr name="riv_corner_radius" format="dimension"/>
         <attr name="riv_corner_radius_top_left" format="dimension"/>

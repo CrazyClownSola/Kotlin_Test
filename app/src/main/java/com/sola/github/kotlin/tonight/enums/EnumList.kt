@@ -30,6 +30,9 @@ class EnumList {
 
         const val TAB_TOP_CIRCLE = 7L
 
+        const val TAB_CLUB_DETAIL_INFO = 8L
+
+
     }
 
     @IntDef(FLAG_TYPE_ACTIVITY, FLAG_TYPE_CACHE, FLAG_TYPE_DB)

@@ -18,5 +18,6 @@
     <string name="string_label_club_detail">酒吧详情</string>
     <string name="string_label_offer">套餐优惠</string>
     <string name="string_label_amazing_events">精彩活动</string>
+    <string name="string_message_scroll_more">继续拖动，查看更多信息</string>
 
 </resources>

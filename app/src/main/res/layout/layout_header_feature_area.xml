@@ -58,11 +58,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toRightOf="@+id/textView"
-            app:layout_constraintRight_toLeftOf="@+id/imageButton"
+            app:layout_constraintRight_toLeftOf="@+id/id_btn_location"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/id_btn_location"
             style="@android:style/Widget.Material.Button.Borderless.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

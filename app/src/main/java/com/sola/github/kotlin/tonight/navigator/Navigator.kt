@@ -62,7 +62,9 @@ class Navigator @Inject constructor() {
 //                        (context).startActivityForResult(intent, requestCode)
 //                }
 //            } else {
-            intent.putExtras(bundle)
+            bundle?.let {
+                intent.putExtras(it)
+            }
             val options: ActivityOptions =
                     ActivityOptions.makeSceneTransitionAnimation(context, *pairs)
 //                options.toBundle().putAll(bundle)

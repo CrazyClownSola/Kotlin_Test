@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_edge_loading_1">#31b5ff</color>
+    <color name="color_edge_loading_2">#04a5ff</color>
+    <color name="color_edge_loading_3">#266eff</color>
+    <color name="color_edge_loading_4">#4046c0</color>
+    <color name="color_edge_loading_5">#7241bf</color>
+    <color name="color_edge_loading_6">#5412a1</color>
+    <color name="color_edge_loading_7">#009129</color>
+    <color name="color_edge_loading_8">#00b834</color>
+    <color name="color_edge_loading_9">#00ee43</color>
+    <color name="color_edge_loading_10">#1eff5d</color>
+    <color name="color_edge_loading_11">#69ff94</color>
+    <color name="color_edge_loading_12">#eafff0</color>
+
+</resources>

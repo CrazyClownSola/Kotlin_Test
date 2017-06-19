@@ -21,6 +21,10 @@
             android:name=".ui.ClubDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".ui.EmptyActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
